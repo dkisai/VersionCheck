@@ -17,7 +17,7 @@ def login_gbc():
     psw.send_keys(config['TEST']['GBC_PASSWORD'] + Keys.RETURN)
 
 
-def planta_info():
+def planta_info(ip):
     menu = driver.find_element(By.XPATH, '/html/body/nav/div/div[1]/a/i/img')
     menu.click()
     version = WebDriverWait(driver, 10).until(
@@ -26,7 +26,7 @@ def planta_info():
         lambda x: x.find_element(By.XPATH, '//*[@id="slide-out"]/li[1]/div/a[3]/h6/b').text)
     imagen = "./Screenshot/" + planta[8:] + ".png"
     driver.save_screenshot(imagen)
-    print(planta[8:] + " " + version[22:])
+    print(ip + " " + planta[8:] + " " + version[22:])
 
 
 if __name__ == "__main__":
@@ -51,7 +51,7 @@ if __name__ == "__main__":
                 continue
             try:
                 login_gbc()
-                planta_info()
+                planta_info(line[:-1])
             except NoSuchElementException:
                 print(line[:-1] + " NoSuchElement ERROR")
                 continue
